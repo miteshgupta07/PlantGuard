@@ -2,3 +2,4 @@ tensorflow == 2.15.0
 numpy == 1.24.4
 pandas == 2.2.0
 streamlit == 1.30.0
+matplotlib == 3.8.4
