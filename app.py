@@ -3,8 +3,10 @@ from keras.models import load_model
 from keras.preprocessing.image import img_to_array
 import keras.preprocessing.image as kimage
 import numpy as np
-from Disease_Information import plant_disease_dict, model_mapping_dict
+from src.disease_information import plant_disease_dict, model_mapping_dict
 import time
+import warnings
+warnings.filterwarnings("ignore")
 
 def display_plant_disease_dictrmation(result,plant_type):
     if result=='Healthy':
@@ -34,7 +36,7 @@ def display_plant_disease_dictrmation(result,plant_type):
 def select_model(plant_type):
 
     model_mapping=model_mapping_dict
-    model_path = model_mapping[plant_type]['model_path']
+    model_path = "models/" + model_mapping[plant_type]['model_path']
     classes = model_mapping[plant_type]['classes']
 
     return classes,model_path
@@ -59,4 +61,6 @@ uploaded_image = st.file_uploader('*Upload an image*', ['jpeg', 'png', 'jpg'])
 st.sidebar.write("## *Selected Plant Type:*",plant_type)
 if uploaded_image is not None:
     st.sidebar.image(uploaded_image)
-    predict_disease(uploaded_image, plant_type)
+    if st.button('Predict Disease'):
+        with st.spinner('Processing the image...'):
+            predict_disease(uploaded_image, plant_type)
